@@ -69,7 +69,7 @@ nmap <leader>t :set filetype=txt        <CR>
 nmap <leader>v :set filetype=vim        <CR>
 nmap <leader>y :set filetype=python     <CR>
 
-
+set backspace=indent,eol,start
 set clipboard=unnamedplus
 set mouse=a
 set relativenumber
@@ -129,8 +129,6 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%
 " vim-plug
 "
 call plug#begin('~/.vim/plug')
-" Plug 'vim-scripts/taglist.vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'wgwoods/vim-systemd-syntax'
 Plug 'godlygeek/tabular'
 Plug 'kien/ctrlp.vim'
