@@ -44,7 +44,6 @@ nnoremap <silent> <C-Right> :wincmd l<CR>
 nnoremap <F2> :NERDTreeToggle<CR>
 
 
-call system('mkdir -p ~/.vimtmp/undodir ~/.vimtmp/backupdir ~/.vimtmp/directory')
 colorscheme torte
 filetype on
 filetype plugin indent on
@@ -69,6 +68,7 @@ nmap <leader>t :set filetype=txt        <CR>
 nmap <leader>v :set filetype=vim        <CR>
 nmap <leader>y :set filetype=python     <CR>
 
+
 set backspace=indent,eol,start
 set clipboard=unnamedplus
 set mouse=a
@@ -76,7 +76,6 @@ set relativenumber
 set ambiwidth=double
 set autoread
 set autowriteall
-set backup
 set bs+=start
 set smartindent cindent autoindent
 set shiftwidth=4 tabstop=4 smarttab
@@ -101,11 +100,6 @@ set nocompatible
 set showcmd                                 " Show cmd in vim-cmdline.
 set t_Co=256                                " Make vim look better in putty.
 set textwidth=0
-set undodir=~/.vimtmp/undodir
-            \ directory=~/.vimtmp/directory
-            \ backupdir=~/.vimtmp/backupdir
-            \ viewdir=~/.vimtmp/view
-            \ undofile
 set vb t_vb=                                " Turn off bi-sound of vim.
 set wildignore+=*.git\\*,*.tgz,*.zip,*.url,*.pyc,*.class
 set wrap linebreak
