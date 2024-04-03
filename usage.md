@@ -1,10 +1,16 @@
-使用clang，需要下载libclang-dev
+# coc-nvim
 
-然后需要设置
-let g:clang_library_path='/usr/lib/llvm-14/lib/libclang-14.so.1'
-,版本路径可能不对
+安装高版本nodejs，apt中都是低版本
+
+```
+curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+PlugInstall 后，执行
 
 
+sudo apt-get install exuberant-ctags
 
 # nerdtree
 
@@ -26,3 +32,5 @@ ctrl+方向，设置光标
 
 zf，折叠
 zo，展开
+
+

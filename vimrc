@@ -1,211 +1,98 @@
-" \   \  /   / |  | |       \ |   ____|
-"  \   \/   /  |  | |  .--.  ||  |__
-"   \      /   |  | |  |  |  ||   __|
-"    \    /    |  | |  '--'  ||  |____
-"     \__/     |__| |_______/ |_______|
-"
-
-
 vnoremap <Tab> zf     
 
-
-" 在光标离开当前页面时自动保存文件
+" 光标
+" 打开文件恢复到上一次光标位置，并置顶
+" 光标从窗口中转移，自动保存
+autocmd BufReadPost * execute "normal! " . line("'\"") . "Gzt"
 autocmd BufLeave * silent! write
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" 在插入模式下自动插入括号，并将光标放在中间
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-
-
+" 终端
 "shift + hjkl,新建终端
 nnoremap <silent> <S-l> :botright vertical terminal<CR>
 nnoremap <silent> <S-j> :botright terminal<CR>
 nnoremap <silent> <S-k> :topleft termina<CR>
 nnoremap <silent> <S-h> :vertical topleft terminal<CR>
 
+" 窗口
 " ctrl + hjkl,新建窗口
+" Map Ctrl + 方向键 ,切换光标聚焦窗口
 nnoremap <C-h> <C-w>h:vsp<CR>
 nnoremap <C-j> <C-w>j:sp<CR>
 nnoremap <C-k> <C-w>k:sp<CR>
 nnoremap <C-l> <C-w>l:vsp<CR>
-
-
-
-" Map Ctrl + 方向键 to switch cursor between windows
 nnoremap <silent> <C-Up>    :wincmd k<CR>
 nnoremap <silent> <C-Down>  :wincmd j<CR>
 nnoremap <silent> <C-Left>  :wincmd h<CR>
 nnoremap <silent> <C-Right> :wincmd l<CR>
 
+" 不备份
+set noswapfile
 
-" F2 打开关闭 文件树木
-nnoremap <F2> :NERDTreeToggle<CR>
-
-
-colorscheme torte
-filetype on
-filetype plugin indent on
-filetype plugin on
-let g:is_bash=1
-let $VIMFILES=$HOME.'/.vim'
-let @w = 'x~n'
-nmap <c-l> <esc>:noh<cr>
-nmap <leader>3 :NERDTreeFind<cr>
-nmap <leader>a :set filetype=awk        <CR>
-nmap <leader>c :set filetype=css        <CR>
-nmap <leader>d :set filetype=htmldjango <CR>
-nmap <leader>e :set filetype=sed        <CR>
-nmap <leader>g :set filetype=go         <CR>
-nmap <leader>h :set filetype=html       <CR>
-nmap <leader>j :set filetype=javascript <CR>
-nmap <leader>l :set filetype=lua        <CR>
-nmap <leader>m :set filetype=markdown   <CR>
-nmap <leader>p :set filetype=php        <CR>
-nmap <leader>s :set filetype=sh         <CR>
-nmap <leader>t :set filetype=txt        <CR>
-nmap <leader>v :set filetype=vim        <CR>
-nmap <leader>y :set filetype=python     <CR>
-
-
-set backspace=indent,eol,start
+" 鼠标，剪切板
 set clipboard=unnamedplus
 set mouse=a
-set relativenumber
+
+" Tab，缩进
+" Tab自动转化4空格，自动缩进
+set shiftwidth=4 tabstop=4 smarttab
+set expandtab
+set smartindent cindent autoindent
+
+" 编码
+" 自动转化utf-8，中文字符占两格
+set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936 fileencoding=utf-8
 set ambiwidth=double
+
+" 外观
+" 设置左侧行号，绝对和相对
+" 设置颜色
+" 设置下划线
+" 设置搜索高亮
+set number
+set t_Co=256                                " Make vim look better in putty.
+set hlsearch
+set cursorline
+set relativenumber
+
+" 退格
+set backspace=indent,eol,start
+
+" 文本
+" 不限长
+set textwidth=0
+set wrap linebreak
+
+" 自动读写
 set autoread
 set autowriteall
-set bs+=start
-set smartindent cindent autoindent
-set shiftwidth=4 tabstop=4 smarttab
-set complete-=i
-set cursorline
 
-set expandtab
-set encoding=utf-8 fileencodings=ucs-bom,utf-8,cp936 fileencoding=utf-8
+" 杂项
 set foldmethod=manual
-set hidden hlsearch
 set ignorecase smartcase
-set noautochdir
-set noshowmatch
-set nowrapscan
-set number
-set pastetoggle=<F5>
-set path+=./model/,./ctrl/,./lib/,*/templates/,*/static/,..,*/src/main/java/
-set printoptions=formfeed:y,header:0,paper:A4,duplex:off,syntax:n
-set scrolloff=1
-set shell=/bin/bash
-set nocompatible
 set showcmd                                 " Show cmd in vim-cmdline.
-set t_Co=256                                " Make vim look better in putty.
-set textwidth=0
-set vb t_vb=                                " Turn off bi-sound of vim.
-set wildignore+=*.git\\*,*.tgz,*.zip,*.url,*.pyc,*.class
-set wrap linebreak
-set incsearch
-syntax on
+set noerrorbells
 
-"
-"" statusline
-"
-function Version ()
-    return system("grep -o '^v[0-9]*' ~/.vim/version|tr -d '\n'")
-endfunction
-set laststatus=2
-set statusline=(Vide.%{Version()})\ \ %<%f
-set statusline+=%w%h%m%r
-set statusline+=\ %{getcwd()}
-set statusline+=\ [%{&ff}:%{&fenc}:%Y]
-set statusline+=%=%-14.(%l,%c%V%)\ %p%%
-
-"
-" vim-plug
-"
+" 插件
+" 代码补全,文件数，vscode主题，airline，缩进对齐
 call plug#begin('~/.vim/plug')
-Plug 'wgwoods/vim-systemd-syntax'
-Plug 'godlygeek/tabular'
-Plug 'kien/ctrlp.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdtree'
-Plug 'tmhedberg/matchit'
-Plug 'tpope/vim-commentary'
-Plug 'vim-syntastic/syntastic'
-Plug 'xavierd/clang_complete'
 Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
-let g:clang_library_path='/usr/lib/llvm-14/lib/libclang-14.so.1'
+" 代码补全的快捷键
+inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1)  : "\<Tab>"
+inoremap <silent><expr> <CR>
+      \ coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-"
-" syntastic
-"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_quiet_messages = { "level": "errors" }
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" 自动打开文件树
+" F2 打开关闭 文件树
+nnoremap <F2> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree | wincmd p
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-"
-
-" NERDTree
-"
-let g:NERDTreeDirArrowExpandable  = '@'
-" let g:NERDTreeNodeDelimiter       = "\u00a0"
-let g:NERDTreeDirArrowCollapsible = '-'
-let g:NERDTreeShowHidden          = 0
-let g:NERDTreeBookmarksFile       = $HOME.'/.vimtmp/NerdBookmarks.txt'
-let g:NERDTreeShowBookmarks       = 1
-let g:NERDTreeShowFiles           = 1
-let g:NERDTreeShowLineNumbers     = 0
-let g:NERDTreeWinSize             = 29
-let g:NERDTreeMinimalUI           = 1
-let g:NERDTreeDirArrows           = 1
-let g:NERDTreeIgnore              = [
-            \ '.*\.class',
-            \ '.*\.pyc',
-            \ '.*\.chm',
-            \ '.*\.ttf',
-            \ '.*\.lnk',
-            \ '.*\.cproj',
-            \ '.*\.exe',
-            \ '.*\.dll',
-            \ '.*\.out',
-            \ '.*\.files',
-            \ '.*\.zip',
-            \ '.*\.rar',
-            \ '.*\.gif'
-            \ ]
-let g:NERDTreeIndicatorMapCustom = {
-            \ "Modified"  : "✹",
-            \ "Staged"    : "✚",
-            \ "Untracked" : "✭",
-            \ "Renamed"   : "➜",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "✖",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✔︎",
-            \ "Unknown"   : "?"
-            \ }
-
-"
-" ctrlp
-"
-" Making CtrlP.vim load 100x faster — A Tiny Piece of Vim — Medm
-" https://medium.com/a-tiny-piece-of-vim/making-ctrlp-vim-load-100x-faster-7a722fae7df6#.emcvo89nx
-let g:ctrlp_user_command = [
-            \ '.git/',
-            \ 'git --git-dir=%s/.git ls-files -oc --exclude-standard'
-            \ ]
-let g:ctrlp_match_window       = 'bottom,order:btt,min:5,max:5,results:10'
-let g:ctrlp_cmd                = 'CtrlPMixed'
-let g:ctrlp_mruf_default_order = 1
-
-"
-" utime.vim
-"
-let g:timeStampFormat = '170101'
-let g:timeStampString = '%y%m%d'
-let g:timeStampLeader = 'version'
-
-
-
+" vscode外观
 colorscheme codedark
+
