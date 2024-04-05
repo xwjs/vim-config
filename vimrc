@@ -73,13 +73,26 @@ set showcmd                                 " Show cmd in vim-cmdline.
 set noerrorbells
 
 " 插件
-" 代码补全,文件数，vscode主题，airline，缩进对齐
+" 代码补全,文件数，vscode主题 缩进对齐
 call plug#begin('~/.vim/plug')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdtree'
 Plug 'tomasiser/vim-code-dark'
+Plug 'jiangmiao/auto-pairs'
+Plug 'preservim/nerdcommenter'
 call plug#end()
+
+" 缩进对齐
+let g:indentLine_enabled = 1			" 使插件生效
+let g:indentLine_char = '¦'				" 设置缩进线字符，也可以为 '|', '┆', '┊' 等
+
+" 设置 Python 语言服务器为 pyright
+let g:coc_global_extensions = ['coc-snippets', 'coc-highlight', 'coc-lists', 'coc-json', 'coc-pyright']
+
+" 设置 C++ 语言服务器为 clangd
+let g:coc_global_extensions = ['coc-snippets', 'coc-highlight', 'coc-lists', 'coc-json', 'coc-clangd']
+
 
 " 代码补全的快捷键
 inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1)  : "\<Tab>"
@@ -87,11 +100,14 @@ inoremap <silent><expr> <CR>
       \ coc#pum#visible() ? coc#pum#confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+
 " 自动打开文件树
 " F2 打开关闭 文件树
 nnoremap <F2> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree | wincmd p
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+nmap <F3> :TagbarToggle<CR>
 
 " vscode外观
 colorscheme codedark

@@ -10,8 +10,6 @@ sudo apt-get install -y nodejs
 PlugInstall 后，执行
 
 
-sudo apt-get install exuberant-ctags
-
 # nerdtree
 
 大写I，显示隐藏文件
