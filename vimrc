@@ -87,12 +87,7 @@ call plug#end()
 let g:indentLine_enabled = 1			" 使插件生效
 let g:indentLine_char = '¦'				" 设置缩进线字符，也可以为 '|', '┆', '┊' 等
 
-" 设置 Python 语言服务器为 pyright
-let g:coc_global_extensions = ['coc-snippets', 'coc-highlight', 'coc-lists', 'coc-json', 'coc-pyright']
-
-" 设置 C++ 语言服务器为 clangd
-let g:coc_global_extensions = ['coc-snippets', 'coc-highlight', 'coc-lists', 'coc-json', 'coc-clangd']
-
+let g:coc_global_extensions = ['coc-snippets', 'coc-highlight', 'coc-lists', 'coc-json', 'coc-clangd', 'coc-html', 'coc-pyright', 'coc-tsserver']
 
 " 代码补全的快捷键
 inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1)  : "\<Tab>"
