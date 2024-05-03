@@ -21,6 +21,20 @@ nnoremap <silent> <C-Up>    :wincmd k<CR>
 nnoremap <silent> <C-Down>  :wincmd j<CR>
 nnoremap <silent> <C-Left>  :wincmd h<CR>
 nnoremap <silent> <C-Right> :wincmd l<CR>
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
+
+
+" Ctrl+U 上一页
+nnoremap <C-U> <C-B>
+inoremap <C-U> <C-O><C-B>
+
+" Ctrl+I 下一页
+nnoremap <C-I> <C-F>
+inoremap <C-I> <C-O><C-F>
+
 
 " 不备份
 set noswapfile
@@ -73,6 +87,9 @@ set ignorecase smartcase
 set showcmd                                 " Show cmd in vim-cmdline.
 set noerrorbells
 
+" 折叠
+set foldmethod=manual
+
 " 插件
 " 代码补全,文件数，vscode主题 缩进对齐
 call plug#begin('~/.vim/plug')
@@ -107,32 +124,10 @@ autocmd VimEnter * NERDTree | wincmd p
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
-" gutentags搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归 "
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.project']
-
-" 所生成的数据文件的名称 "
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录 "
-let g:gutentags_cache_dir = '~/.cache/tags'
-
-" 配置 ctags 的参数 "
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+pxI']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
-
 " tagbar设置
-
 let g:tagbar_autofocus = 1 " 打开tagbar时自动focus到tagbar窗口
-
-
-let g:tagbar_ctags_bin = '~/.cache/tags/.tags'
 nmap <F3> :TagbarToggle<CR>
 let g:tagbar_width=30
-
-
-set foldmethod=manual
 
 " vscode外观
 colorscheme codedark
