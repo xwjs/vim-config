@@ -1,3 +1,4 @@
+"选中块折叠
 vnoremap <Tab> zf     
 
 " 光标
@@ -6,13 +7,9 @@ vnoremap <Tab> zf
 autocmd BufReadPost * execute "normal! " . line("'\"") . "Gzt"
 autocmd BufLeave * silent! write
 
-" 终端
-"shift + hjkl,新建终端
-nnoremap <silent> <S-l> :botright vertical terminal<CR>
-nnoremap <silent> <S-j> :botright terminal<CR>
-nnoremap <silent> <S-k> :topleft termina<CR>
-nnoremap <silent> <S-h> :vertical topleft terminal<CR>
-
+" 折叠保存
+autocmd BufWinLeave * mkview
+autocmd BufWinEnter * silent loadview
 
 " 窗口
 " ctrl + hjkl,新建窗口
@@ -21,20 +18,21 @@ nnoremap <silent> <C-Up>    :wincmd k<CR>
 nnoremap <silent> <C-Down>  :wincmd j<CR>
 nnoremap <silent> <C-Left>  :wincmd h<CR>
 nnoremap <silent> <C-Right> :wincmd l<CR>
-nnoremap <silent> <C-h> :wincmd h<CR>
-nnoremap <silent> <C-j> :wincmd j<CR>
-nnoremap <silent> <C-k> :wincmd k<CR>
-nnoremap <silent> <C-l> :wincmd l<CR>
 
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-" Ctrl+U 上一页
-nnoremap <C-U> <C-B>
-inoremap <C-U> <C-O><C-B>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
 
-" Ctrl+I 下一页
-nnoremap <C-I> <C-F>
-inoremap <C-I> <C-O><C-F>
-
+tnoremap <C-Up> <C-\><C-N>
+tnoremap <C-Down> <C-\><C-N>
+tnoremap <C-Left> <C-\><C-N>
+tnoremap <C-Right> <C-\><C-N>
 
 " 不备份
 set noswapfile
@@ -62,11 +60,10 @@ set ambiwidth=double
 " 设置左侧行号，绝对和相对
 " 设置颜色
 " 设置下划线
-" 设置搜索高亮
 set number
 set t_Co=256                                " Make vim look better in putty.
+set termguicolors
 set hlsearch
-set cursorline
 set relativenumber
 
 " 退格
@@ -87,12 +84,10 @@ set ignorecase smartcase
 set showcmd                                 " Show cmd in vim-cmdline.
 set noerrorbells
 
-" 折叠
-set foldmethod=manual
-
 " 插件
 " 代码补全,文件数，vscode主题 缩进对齐
 call plug#begin('~/.vim/plug')
+Plug 'ku1ik/vim-monokai'
 Plug 'vim-airline/vim-airline'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'preservim/tagbar'
@@ -116,20 +111,18 @@ inoremap <silent><expr> <CR>
       \ coc#pum#visible() ? coc#pum#confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-
-" 自动打开文件树
-" F2 打开关闭 文件树
 nnoremap <F2> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree | wincmd p
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-
 " tagbar设置
-let g:tagbar_autofocus = 1 " 打开tagbar时自动focus到tagbar窗口
 nmap <F3> :TagbarToggle<CR>
-let g:tagbar_width=30
 
 " vscode外观
-colorscheme codedark
+colorscheme monokai
+
+
+
+
 
 
